@@ -1,0 +1,3 @@
+﻿  main.cpp
+c:\users\j6070\onedrive\桌面\cg\computer graphic\project1\source_code\opengl\opengl\main.cpp(79): warning C4065: switch statement contains 'default' but no 'case' labels
+  opengl.vcxproj -> C:\Users\j6070\OneDrive\桌面\CG\Computer Graphic\project1\source_code\opengl\Debug\opengl.exe
