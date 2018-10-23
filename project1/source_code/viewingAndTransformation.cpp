@@ -54,16 +54,16 @@ void display()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//sum
+	//sun
 	glutWireSphere(1, 18, 18);
-	//plant1
+	//planet1
 	glPushMatrix();
 	glRotatef(degree, 0.0f, 1.0f, 0.0f);
 	glTranslatef(3.0, 0.0, 0.0);
 	glScalef(0.5, 0.5, 0.5);
 	glutWireCube(1);
 	glPopMatrix();
-	//plant2
+	//planet2
 	glPushMatrix();
 	glRotatef(degree * 2, 0.0f, 1.0f, 0.0f);
 	glTranslatef(2.0, 0.0, 0.0);
