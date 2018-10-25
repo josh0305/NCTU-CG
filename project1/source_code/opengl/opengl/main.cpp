@@ -18,7 +18,7 @@ void lighting();
 void drawSphere(double r, int stack, int slice);
 
 int width = 400, height = 400;
-int degree = 0, radius = 1;
+float degree_e = 0.0, degree_m = 0.0, degree_rev = 0.0, radius = 1.0, speed = 100;
 static bool paused = false;
 static bool not_sphere = false;
 
@@ -47,43 +47,46 @@ return 0;
 
 void display()
 {
-//ModelView Matrix
-glMatrixMode(GL_MODELVIEW);
-glLoadIdentity();
-gluLookAt(0.0f, 50.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-//Projection Matrix
-glMatrixMode(GL_PROJECTION);
-glLoadIdentity();
-gluPerspective(45, width / (GLfloat)height, 0.1, 1000);
-//Viewport Matrix
-glViewport(0, 0, width, height);
-//
-glMatrixMode(GL_MODELVIEW);
-glEnable(GL_CULL_FACE);		//remove back face
-glEnable(GL_DEPTH_TEST);
-glEnable(GL_NORMALIZE);
-glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-glClearDepth(1.0f);
-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//ModelView Matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0.0f, 0.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	//Projection Matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45, width / (GLfloat)height, 0.1, 1000);
+	//Viewport Matrix
+	glViewport(0, 0, width, height);
+	//
+	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_CULL_FACE);		//remove back face
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearDepth(1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//color
-GLfloat red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
-GLfloat green[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
-GLfloat blue[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
-GLfloat yellow[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
+	//color
+	GLfloat red[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat green[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
+	GLfloat blue[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	GLfloat yellow[4] = { 0.0f, 1.0f, 1.0f, 1.0f };
 
-//sun
-glMaterialfv(GL_FRONT, GL_DIFFUSE, yellow);
+	//sun
+glMaterialfv(GL_FRONT, GL_DIFFUSE, red);
 drawSphere(6 * radius, 60, 240);
 
 
 //earth
-glRotatef(23, 0.0f, 0.0f, 1.0f);
-glRotatef(degree /365, 0.0f, 1.0f, 0.0f);
-glTranslatef(8 * radius + 20, 0.0, 0.0);
-glRotatef(degree ,0.0f, 1.0f, 0.0f);
+glPushMatrix();
+//glRotatef(degree_e, 0.0f, 1.0f, 0.0f);
+float dis = 8 * radius + 20;
+glTranslatef(dis*cos(degree_e*M_PI/180), 0.0, dis*sin(degree_e*M_PI/180));
+glRotatef(23.5, 0.0f, 0.0f, 1.0f);
+glRotatef(degree_rev, 0.0f, 1.0f, 0.0f);
+
 glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, blue);
-glShadeModel(GL_SMOOTH);
+//glShadeModel(GL_SMOOTH);
 int slice = 360, stack = 180;
 if (not_sphere)
 {
@@ -91,21 +94,23 @@ if (not_sphere)
 	stack = 2;
 }
 drawSphere(2 * radius, stack, slice);
-
 //Revolving axis
 glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, yellow);
 glBegin(GL_LINES);
 glVertex3f(0, 4.0*radius, 0.0);
 glVertex3f(0, -4.0*radius, 0.0);
 glEnd();
+glPopMatrix();
 
 //moon
-glRotatef(degree / 28, 0.0f, 1.0f, 0.0f);
+glPushMatrix();
+glTranslatef(dis*cos(degree_e*M_PI / 180), 0.0, dis*sin(degree_e*M_PI / 180));
+glRotatef(23.5, 0.0f, 0.0f, 1.0f);
+glRotatef(degree_m, 0.0f, 1.0f, 0.0f);
 glTranslatef(3 * radius + 3, 0.0, 0.0);
 glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, green);
 glShadeModel(GL_SMOOTH);
 drawSphere(radius, 60, 240);
-
 glPopMatrix();
 
 glutSwapBuffers();
@@ -141,8 +146,20 @@ void passiveMouseMotion(int x, int y) {
 
 void idle() {
 Sleep(20);	//about 50 fps
-if(!paused)	
-	degree = (degree + 1) % 360;
+if (!paused)
+{
+	degree_e = degree_e + speed/365;
+	if (degree_e >= 360.0f)
+		degree_e = degree_e - 360.0f;
+
+	degree_rev = degree_rev + speed;
+	if (degree_rev >= 360.0f)
+		degree_rev = degree_rev - 360.0f;
+
+	degree_m = degree_m + speed / 28;
+	if (degree_m >= 360.0f)
+		degree_m = degree_m - 360.0f;
+}
 glutPostRedisplay();
 }
 
