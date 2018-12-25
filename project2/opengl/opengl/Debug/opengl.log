@@ -1,0 +1,11 @@
+﻿  baiscDraw.cpp
+  basicGLUT.cpp
+  cube_map_1.cpp
+  cube_map_2.cpp
+  light_material.cpp
+  main.cpp
+  test.cpp
+  texture.cpp
+  viewingAndTransformation.cpp
+  Generating Code...
+  opengl.vcxproj -> C:\Users\j6070\OneDrive\桌面\CG\NCTU-CG\project2\opengl\Debug\opengl.exe

@@ -4,4 +4,5 @@
   test.cpp
   viewingAndTransformation.cpp
   Generating Code...
+  LINK : C:\Users\j6070\OneDrive\桌面\CG\NCTU-CG\project1\source_code\opengl\Debug\opengl.exe not found or not built by the last incremental link; performing full link
   opengl.vcxproj -> C:\Users\j6070\OneDrive\桌面\CG\NCTU-CG\project1\source_code\opengl\Debug\opengl.exe

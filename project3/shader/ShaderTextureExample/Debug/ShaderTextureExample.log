@@ -1,0 +1,6 @@
+﻿  Main.cpp
+c:\users\j6070\onedrive\桌面\cg\nctu-cg\project3\shader\shadertextureexample\main.cpp(1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  c:\users\j6070\onedrive\桌面\cg\nctu-cg\project3\shader\shadertextureexample\main.cpp(1): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+c:\users\j6070\onedrive\桌面\cg\nctu-cg\project3\shader\shadertextureexample\include\freeimage.h : warning C4819: The file contains a character that cannot be represented in the current code page (950). Save the file in Unicode format to prevent data loss
+c:\users\j6070\onedrive\桌面\cg\nctu-cg\project3\shader\shadertextureexample\main.cpp(260): warning C4838: conversion from 'double' to 'float' requires a narrowing conversion
+  ShaderTextureExample.vcxproj -> C:\Users\j6070\OneDrive\桌面\CG\NCTU-CG\project3\shader\Debug\ShaderTextureExample.exe
