@@ -20,7 +20,7 @@ void main()
 	
 	mat2x3 E = mat2x3(geom_pos[1].xyz-geom_pos[0].xyz, geom_pos[2].xyz-geom_pos[0].xyz);
 	mat2 UV = mat2(geom_tex[1]-geom_tex[0], geom_tex[2]-geom_tex[0]);
-	mat2x3 M = transpose(inverse(UV) * transpose(E));
+	mat2x3 M = transpose(inverse(transpose(UV)) * transpose(E));
 	tan = M[0];
 	bitan = M[1];
 
